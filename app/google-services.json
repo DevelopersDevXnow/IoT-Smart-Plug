@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "863030771855",
+    "firebase_url": "https://iot-smart-plug-dec66-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "iot-smart-plug-dec66",
+    "storage_bucket": "iot-smart-plug-dec66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863030771855:android:0fa875635d67af13be30fa",
+        "android_client_info": {
+          "package_name": "com.devxnow.smartplug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863030771855-3fh0puqi61kbii4idgrp56i938ii5qpf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHUDp7EkLVc7jcKBZEXrBQ0h1s8YS-toE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863030771855-3fh0puqi61kbii4idgrp56i938ii5qpf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
