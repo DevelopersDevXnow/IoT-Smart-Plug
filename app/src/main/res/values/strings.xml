@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">Iot Smart Plug</string>
+    <string name="app_name">IoT Smart Plug</string>
+    <string name="tag_line">Making non Smart Devices Smart</string>
+    <string name="term_continue_do_not_translate">Continue</string>
+
 </resources>
