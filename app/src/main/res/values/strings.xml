@@ -2,5 +2,29 @@
     <string name="app_name">IoT Smart Plug</string>
     <string name="tag_line">Making non Smart Devices Smart</string>
     <string name="term_continue_do_not_translate">Continue</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_a_member">Already a member?</string>
+    <string name="login">Log in</string>
+    <string name="demo_mode">Demo mode</string>
+    <string name="please_login_to_your_account">Please login to your account</string>
+    <string name="sign_in">Sign In</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="sign_in_button">Sign In</string>
+    <string name="or">OR</string>
+    <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="enter_email_id">Enter Email ID</string>
+    <string name="reset">Reset</string>
+    <string name="cancle">Cancle</string>
+    <string name="create_a_new_account">Create a new account</string>
+    <string name="full_name">Full Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="network_disconnected">Network Disconnected..!</string>
+    <string name="network_error_message">Check your device internet connection and try again.</string>
 
 </resources>

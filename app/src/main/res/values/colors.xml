@@ -2,10 +2,11 @@
 <resources>
 
 
-
-
+    <color name="transparent">#00000000</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#808080</color>
     <color name="text_color">#FF000000</color>
+    <color name="link_button_text_selector">#001E6D</color>
 
 </resources>

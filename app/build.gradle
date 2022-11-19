@@ -1,9 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'com.google.firebase.firebase-perf'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -12,11 +13,11 @@ android {
 
     defaultConfig {
         applicationId "com.devxnow.smartplug"
+        vectorDrawables.useSupportLibrary = true
         minSdk 28
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
-
+        versionCode 2
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -24,6 +25,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            shrinkResources false
+
+            //   applicationIdSuffix '.debug'
+            versionNameSuffix '-dbg'
         }
     }
     compileOptions {
@@ -34,21 +43,76 @@ android {
         jvmTarget = '1.8'
     }
     buildToolsVersion '30.0.3'
+
+    buildFeatures {
+        viewBinding true
+    }
+
 }
 
 dependencies {
+
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.gms:play-services-ads:21.3.0'
+    implementation 'com.google.android.gms:play-services-auth:20.3.0'
+    implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    //Firebase
     implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.1.0'
     implementation 'com.google.firebase:firebase-storage-ktx:20.1.0'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.1'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.2'
     implementation 'com.google.firebase:firebase-perf-ktx:20.2.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+
+    //Navigation Component Kotlin
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+
+    //lottie-Android
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+
+
+    //Tapadoo Alerter
+    implementation 'com.github.tapadoo:alerter:7.2.4'
+
+    //Firebase  UI Auth
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
+
+    //In app update
+    implementation("com.google.android.play:app-update-ktx:2.0.1")
+
+    //PhilJay MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // chnouman AwesomeDialog
+    implementation 'com.github.chnouman:AwesomeDialog:1.0.5'
+
+    //GrenderGToasty
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
+
+    //Custom Tabs
+    implementation 'androidx.browser:browser:1.4.0'
+
+    //Trusted Web Apps
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.4.0'
+
+    // cortinico slidetoact
+    implementation "com.ncorti:slidetoact:0.9.0"
+
+    //codegamez LoadingButtonAndroid
+    implementation 'com.github.codegamez:LoadingButtonAndroid:2.2.1'
+
+
 }

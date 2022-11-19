@@ -29,4 +29,17 @@
     <style name="Font.OnWhite.H2" parent="@style/Font.OnWhite">
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="ThemeOverlay.Material3.Button.Rounded">
+        <item name="colorOnPrimary">?attr/colorPrimary</item>
+    </style>
+
+
+    <style name="Widget.OneApp.Button.Rounded.Primary" parent="Widget.Material3.Button.OutlinedButton">
+    <item name="android:textColor">@color/white</item>
+    <item name="backgroundTint">@color/black</item>
+    <item name="materialThemeOverlay">@style/ThemeOverlay.Material3.Button.Rounded</item>
+    <item name="rippleColor">@color/gray</item>
+    </style>
+
 </resources>

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "863030771855-j924fdinbk05of9hj7clmkkmrnqbuoqm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devxnow.smartplug",
+            "certificate_hash": "f4d5b8192129cb288d89f2854b3e9882e93b8d82"
+          }
+        },
+        {
           "client_id": "863030771855-3fh0puqi61kbii4idgrp56i938ii5qpf.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -33,7 +41,8 @@
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-2885159444401812~3151340235"
     }
   ],
   "configuration_version": "1"
