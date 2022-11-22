@@ -56,7 +56,6 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:maxLines="1"
-
             android:paddingStart="20dp"
             android:paddingEnd="50dp"
             android:textSize="16sp" />
@@ -83,16 +82,31 @@
         android:layout_marginEnd="20dp"
         android:text="@string/forgot_password" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_signin"
+    <!-- Sign In button-->
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/btn_sign_in"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
-        android:text="@string/sign_in_button"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF" />
+        android:text="@string/sign_in"
+        android:textColor="@android:color/white"
+        android:transitionName="transition_upload_btn"
+        app:spinning_bar_color="#FFF"
+        app:spinning_bar_padding="6dp"
+        app:spinning_bar_width="4dp" />
+
+    <!--    <com.google.android.material.button.MaterialButton-->
+    <!--        android:id="@+id/btn_signin"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="55dp"-->
+    <!--        android:layout_marginStart="20dp"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:layout_marginEnd="20dp"-->
+    <!--        android:text="@string/sign_in_button"-->
+    <!--        android:textAllCaps="false"-->
+    <!--        android:textColor="#FFFFFF" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -2,11 +2,13 @@ package com.devxnow.smartplug
 
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.devxnow.smartplug.databinding.ActivityHomeBinding
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
@@ -25,10 +27,11 @@ class HomeActivity : AppCompatActivity() {
         inProgressUpdate()
     }
 
-    override fun onBackPressed() {
-
-        moveTaskToBack(true)
-
+    private val onBackPressedCallback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            moveTaskToBack(true)
+            showAppClosingDialog()
+        }
     }
 
 
@@ -43,6 +46,8 @@ class HomeActivity : AppCompatActivity() {
         setContentView(view)
 
 
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+
         appUpdate = AppUpdateManagerFactory.create(this)
         checkAppUpdate()
 
@@ -50,6 +55,15 @@ class HomeActivity : AppCompatActivity() {
         loadInterAd()
         showInterAd()
 
+    }
+
+    private fun showAppClosingDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Warning")
+            .setMessage("Do you really want to close the app?")
+            .setPositiveButton("Yes") { _, _ -> finish() }
+            .setNegativeButton("No", null)
+            .show()
     }
 
     private fun showInterAd() {

@@ -5,19 +5,27 @@ import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.devxnow.smartplug.databinding.FragmentLoginBinding
+import com.devxnow.smartplug.methods.Methods
 import com.devxnow.smartplug.services.CheckInternet
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -28,6 +36,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.tapadoo.alerter.Alerter
+import com.tapadoo.alerter.OnHideAlertListener
+import com.tapadoo.alerter.OnShowAlertListener
 import es.dmoral.toasty.Toasty
 
 
@@ -38,8 +49,12 @@ class LoginFragment : Fragment() {
         private const val TAG = "LOGIN_TAG"
     }
 
+    var methods: Methods? = null
+    var animError: Animation? = null
+
     private var binding: FragmentLoginBinding? = null
     private lateinit var auth: FirebaseAuth
+    var mAuthListener: FirebaseAuth.AuthStateListener? = null
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var email_id: EditText
     private lateinit var email: String
@@ -48,15 +63,35 @@ class LoginFragment : Fragment() {
 
     var mContext: Context? = null
 
+    var callback: OnBackPressedCallback = object : OnBackPressedCallback(
+        true // default to enabled
+    ) {
+        override fun handleOnBackPressed() {
+
+            binding?.btnSignIn?.dispose()
+            showAppClosingDialog()
+        }
+    }
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
+
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this, // LifecycleOwner
+            callback
+        );
+
+
     }
+
 
     override fun onDestroyView() {
         binding = null
         super.onDestroyView()
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -64,6 +99,11 @@ class LoginFragment : Fragment() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             // reload();
+            activity?.let {
+                val intent = Intent(it, HomeActivity::class.java)
+                it.startActivity(intent)
+            }
+
         }
     }
 
@@ -74,6 +114,9 @@ class LoginFragment : Fragment() {
 // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(layoutInflater)
 
+        methods = Methods(requireContext())
+
+        animError = AnimationUtils.loadAnimation(requireContext(), R.anim.shake)
 
         binding!!.etPassword.disableCopyPaste()
 
@@ -93,6 +136,10 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentLoginBinding.bind(view)
 
+
+        binding.btnSignIn.background =
+            ActivityCompat.getDrawable(requireContext(), R.drawable.btn_background_ripple)
+
         //   Toast.makeText(requireContext(), "Google sign In", Toast.LENGTH_SHORT).show()
 
         //    getActivity()?.let { Alerter.create(it).setTitle("Google sign In").setText("text").show() };
@@ -105,6 +152,7 @@ class LoginFragment : Fragment() {
             //Check Internet Connection
             val checkInternet = CheckInternet()
             if (!checkInternet.isNetworkAvailable(requireContext())) {
+                methods!!.vibrate(false)
                 checkInternet.showNetworkDisconnectPopupDialog(requireActivity())
                 return@setOnClickListener
             }
@@ -113,14 +161,17 @@ class LoginFragment : Fragment() {
             signInGoogle()
         }
 
-        binding.btnSignin.setOnClickListener {
+        binding.btnSignIn.setOnClickListener {
+
+            binding.btnSignIn.startAnimation()
 
             email = binding.etEmail.text.toString().trim()
             password = binding.etPassword.text.toString().trim()
 
             //validate Email and Password
             if (!validateEmail() or !validatePassword()) {
-
+                methods!!.vibrate(false)
+                errorLoadingButton()
                 return@setOnClickListener
 
             }
@@ -129,9 +180,11 @@ class LoginFragment : Fragment() {
             //Check Internet Connection
             val checkInternet = CheckInternet()
             if (!checkInternet.isNetworkAvailable(requireContext())) {
+                methods!!.vibrate(false)
                 checkInternet.showNetworkDisconnectPopupDialog(requireActivity())
                 return@setOnClickListener
             }
+
 
 
             auth.signInWithEmailAndPassword(email, password)
@@ -144,9 +197,25 @@ class LoginFragment : Fragment() {
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(
-                            requireContext(), "Authentication failed.", LENGTH_SHORT
-                        ).show()
+
+                        Alerter.create(requireActivity())
+                            .setTitle("Authentication failed.")
+                            .setText("Invalid email or password.")
+                            .setDuration(2000)
+                            .setIcon(R.drawable.ic_error_icon)
+                            .setBackgroundColorRes(R.color.red_maroon)
+                            //  .setIconColorFilter(0) // Optional - Removes white tint
+                            .setOnShowListener(OnShowAlertListener {
+                                Toasty.normal(
+                                    requireContext(), "Please Login again!", Toasty.LENGTH_SHORT
+                                ).show()
+                            }).setOnHideListener(OnHideAlertListener {
+
+                                errorLoadingButton()
+
+                            })
+                            .show()
+
                         //  updateUI(null)
                     }
                 }
@@ -267,8 +336,62 @@ class LoginFragment : Fragment() {
 
     }
 
+    private fun errorLoadingButton() {
+        binding?.btnSignIn?.doneLoadingAnimation(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.red_maroon
+            ),
+            Methods.getBitmap(requireContext(), R.drawable.ic_error_outline_white_24)
+        )
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            //Revert the Loading button Animation.
+            binding?.btnSignIn?.revertAnimation()
+
+
+        }, 1000)
+    }
+
+    private fun successLoadingButton() {
+        binding?.btnSignIn?.doneLoadingAnimation(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.green_a700
+            ),
+            Methods.getBitmap(requireContext(), R.drawable.ic_check_24)
+        )
+
+//        Handler(Looper.getMainLooper()).postDelayed({
+//
+//            //Revert the Loading button Animation.
+//            binding?.btnSignIn?.revertAnimation()
+//
+//
+//        }, 1000)
+    }
+
+
+    private fun showAppClosingDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Warning")
+            .setMessage("Do you really want to close the app?")
+            .setPositiveButton("Yes") { _, _ -> activity?.finish() }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
 
     private fun updateEmailLoginUI(user: FirebaseUser?) {
+
+        successLoadingButton()
+
+        Toasty.success(
+            requireContext(),
+            "User Login Successful",
+            Toasty.LENGTH_LONG
+        ).show()
 
         activity?.let {
             val intent = Intent(it, HomeActivity::class.java)
@@ -310,9 +433,11 @@ class LoginFragment : Fragment() {
         val checkEmail = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
         return if (mEmail.isEmpty()) {
             binding!!.etEmail.error = "Field can not be empty"
+            binding!!.etEmail.animation = animError
             false
         } else if (!mEmail.matches(checkEmail)) {
             binding!!.etEmail.error = "Invalid Email!"
+            binding!!.etEmail.animation = animError
             false
         } else {
             binding!!.etEmail.error = null
@@ -340,9 +465,11 @@ class LoginFragment : Fragment() {
 
         return if (mPassword.isEmpty()) {
             binding!!.etPassword.error = "Field can not be empty"
+            binding!!.etPassword.animation = animError
             false
         } else if (!mPassword.matches(checkPassword.toRegex())) {
             binding!!.etPassword.error = "Password format is incorrect!"
+            binding!!.etPassword.animation = animError
             false
         } else {
             binding!!.etPassword.error = null

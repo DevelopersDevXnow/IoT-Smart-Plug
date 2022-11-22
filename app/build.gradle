@@ -114,5 +114,12 @@ dependencies {
     //codegamez LoadingButtonAndroid
     implementation 'com.github.codegamez:LoadingButtonAndroid:2.2.1'
 
+    //Scalable size units
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
+    implementation 'com.intuit.ssp:ssp-android:1.1.0'
+
+    implementation "androidx.activity:activity-ktx:1.6.1"
+    implementation "androidx.fragment:fragment-ktx:1.5.4"
+
 
 }

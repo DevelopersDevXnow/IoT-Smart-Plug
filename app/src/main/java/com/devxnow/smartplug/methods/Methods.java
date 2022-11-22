@@ -58,6 +58,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.devxnow.smartplug.BuildConfig;
 import com.devxnow.smartplug.R;
 import com.google.android.material.color.MaterialColors;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 
 import java.io.File;
@@ -282,7 +283,7 @@ public class Methods {
             bgDrawable.draw(canvas);
         } else {
             //does not have background drawable, then draw white background on the canvas
-         //   canvas.drawColor(MaterialColors.getColor(context, R.attr.colorSubBackground, Color.BLACK));
+            //   canvas.drawColor(MaterialColors.getColor(context, R.attr.colorSubBackground, Color.BLACK));
         }
         // draw the view on the canvas
         view.draw(canvas);
@@ -557,7 +558,7 @@ public class Methods {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("Are you sure you want to exit?");
-       // builder.setIcon(R.drawable.menu_logout_icon);
+        // builder.setIcon(R.drawable.menu_logout_icon);
         builder.setCancelable(false);
         builder.setPositiveButton("EXIT", new DialogInterface.OnClickListener() {
                     @Override
@@ -614,9 +615,11 @@ public class Methods {
                 .setNegativeButton("EXIT", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (activity != null)
+                        if (activity != null) {
                             activity.finishAffinity();
-                           System.exit(0);
+                            System.exit(0);
+                        }
+
 
                     }
                 });
@@ -633,5 +636,15 @@ public class Methods {
 
     }
 
+    public void showAppClosingDialog(Activity activity) {
 
+        new MaterialAlertDialogBuilder(activity)
+                .setTitle("Warning")
+                .setMessage("Do you really want to close the app?")
+                .setPositiveButton("Yes", (dialog, which) -> activity.finish())
+                .setNegativeButton("No", null)
+                .show();
+
+
+    }
 }
