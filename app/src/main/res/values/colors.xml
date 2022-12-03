@@ -7,9 +7,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#808080</color>
     <color name="text_color">#FF000000</color>
-    <color name="colorAccent">#23395D</color>
-    <color name="link_button_text_selector">#001E6D</color>
 
+
+    <color name="colorAccent">#23395D</color>
+    <color name="colorPrimary">#1877F2</color>
+
+    <color name="link_button_text_selector">#001E6D</color>
+    <color name="dull_blue">#23395D</color>
     <color name="red_maroon">#7c0514</color>
     <color name="green_a700">#0F9D58</color>
 

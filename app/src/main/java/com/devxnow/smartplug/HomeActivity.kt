@@ -5,6 +5,7 @@ import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.devxnow.smartplug.databinding.ActivityHomeBinding
+import com.devxnow.smartplug.methods.Methods
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -21,6 +22,8 @@ class HomeActivity : AppCompatActivity() {
     private val REQUEST_CODE = 100
     lateinit var mAdView: AdView
     private var mInterstitialAd: InterstitialAd? = null
+
+    var methods: Methods? = null
 
     override fun onResume() {
         super.onResume()
@@ -45,6 +48,7 @@ class HomeActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        methods = Methods(this);
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
@@ -54,6 +58,17 @@ class HomeActivity : AppCompatActivity() {
         loadBannerAd()
         loadInterAd()
         showInterAd()
+
+        initListeners()
+
+    }
+
+    private fun initListeners() {
+
+        binding.btnLogout.setOnClickListener {
+
+            methods?.logout(this@HomeActivity)
+        }
 
     }
 

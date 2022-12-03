@@ -32,11 +32,11 @@
             android:id="@+id/action_signUpFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <argument
-            android:name="user_name"
+            android:name="userName"
             app:argType="string"
             android:defaultValue="User Name" />
         <argument
-            android:name="user_email"
+            android:name="userEmail"
             android:defaultValue="User Email" />
     </fragment>
 

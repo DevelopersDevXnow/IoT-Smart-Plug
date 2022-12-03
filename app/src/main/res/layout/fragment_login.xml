@@ -34,10 +34,12 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/round_back_dark_blue5_15"
         android:hint="@string/email"
+        android:importantForAutofill="no"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
+        android:textColorHint="#546E7A"
         android:textSize="16sp" />
 
     <RelativeLayout
@@ -54,8 +56,10 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:hint="@string/password"
+            android:importantForAutofill="no"
             android:inputType="textPassword"
             android:maxLines="1"
+            android:textColorHint="#546E7A"
             android:paddingStart="20dp"
             android:paddingEnd="50dp"
             android:textSize="16sp" />
@@ -68,6 +72,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/hide_show_password"
             android:padding="10dp"
             android:src="@drawable/password_show" />
 
@@ -95,7 +100,8 @@
         android:transitionName="transition_upload_btn"
         app:spinning_bar_color="#FFF"
         app:spinning_bar_padding="6dp"
-        app:spinning_bar_width="4dp" />
+        app:spinning_bar_width="4dp"
+        tools:ignore="DuplicateSpeakableTextCheck" />
 
     <!--    <com.google.android.material.button.MaterialButton-->
     <!--        android:id="@+id/btn_signin"-->
@@ -130,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/or"
-            android:textColor="#80000000"
+            android:textColor="#757575"
             android:textSize="12sp" />
 
         <View
@@ -158,6 +164,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/google_icon"
             android:src="@drawable/google_icon" />
 
         <TextView

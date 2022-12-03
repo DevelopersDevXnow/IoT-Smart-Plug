@@ -26,5 +26,10 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="network_disconnected">Network Disconnected..!</string>
     <string name="network_error_message">Check your device internet connection and try again.</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="log_in">Log In</string>
+    <string name="hide_show_password">hide show password</string>
+    <string name="google_icon">Google Icon</string>
+    <string name="logout">Logout</string>
 
 </resources>
